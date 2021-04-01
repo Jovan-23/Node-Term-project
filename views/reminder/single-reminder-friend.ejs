@@ -1,0 +1,93 @@
+<h1 class="mt-4">View Friend Single Reminder</h1>
+
+<div class="container">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <h3 style="margin-bottom: 1.2rem">
+        <strong><%= reminderItem.title %> </strong>
+      </h3>
+      <h5>Description: <%= reminderItem.description %></h5>
+      <h5>
+        Completed: <% if (reminderItem.completed == true) { %>
+        <span class="label label-success">True</span>
+        <% } else if (reminderItem.completed == false) { %>
+        <span class="label label-danger">False</span>
+        <% } %>
+      </h5>
+      <h5 style="margin-bottom: 1rem">
+        Reminder Date: <%= reminderItem.date %>
+      </h5>
+    </li>
+  </ul>
+</div>
+
+<!-- Tags Section -->
+<div style="margin-top: 1rem" class="container">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <h3 style="margin-bottom: 1.2rem"><strong>Tags</strong></h3>
+      <div class="container">
+        <!-- Display Tags -->
+        <% if (tagsList == null || tagsList == undefined || tagsList.length ==
+        0) { %>
+        <h5 style="margin-top: 1.2rem" class="label label-success">No Tags</h5>
+        <% } else { %>
+        <div style="margin-top: 1.4rem">
+          <% tagsList.forEach(tag => { %>
+
+          <!-- Delete Tag  -->
+          <div>
+            <h5
+              style="margin-top: 1.7rem; display: inline-block"
+              class="label label-success"
+            >
+              ID: <%= tag.tagID %> Tag: <%= tag.tagName %>
+            </h5>
+          </div>
+          <% }) %>
+        </div>
+        <% } %>
+        <!-- End of Display Tags -->
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- Sub Tasks Section -->
+<div style="margin-top: 1rem" class="container">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <h3 style="margin-bottom: 1.2rem"><strong>Sub Tasks</strong></h3>
+      <div class="container">
+        <% if (subTasksList == null || subTasksList == undefined ||
+        subTasksList.length == 0) { %>
+        <h5 style="margin-top: 1.2rem" class="label label-success">
+          No Sub Tasks
+        </h5>
+        <% } else { %>
+        <div style="margin-top: 1.4rem">
+          <% subTasksList.forEach(task => { %>
+
+          <h5
+            style="margin-top: 1.7rem; display: inline-block"
+            class="label label-success"
+          >
+            ID: <%= task.subID %> Sub Task: <%= task.subName %>
+          </h5>
+          <span>
+            || Completed: <% if (task.subCheck == true) { %>
+            <span class="badge badge-success">True</span>
+            <% } else if (task.subCheck == false) { %>
+            <span class="badge badge-danger">False</span>
+            <% } %>
+          </span>
+
+          <br />
+          <div style="display: flex"></div>
+          <% }) %>
+        </div>
+        <% } %>
+      </div>
+    </li>
+  </ul>
+</div>

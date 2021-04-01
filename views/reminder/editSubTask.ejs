@@ -1,0 +1,36 @@
+<div class="container">
+    <h1 class="page-header">Edit Sub Task</h1>
+    <form action="<%= "/reminder/" + subTasksItem.subID + "/" + reminderItem.id + "/edit" %>" method="POST">
+
+      <div class="form-group">
+        <label for="subTaskName">Description</label>
+        <textarea class="form-control" id="descriptionInput" rows="3" placeholder="Description" name="subTaskName"><%= subTasksItem.subName %></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="completedSub">Completed</label>
+        <div class="radio">
+          <label>
+            <% if (subTasksItem.subCheck == true) { %>
+              <input type="radio" name="completedSub" id="true" value="true" checked="checked">
+            <% } else { %>
+              <input type="radio" name="completedSub" id="true" value="true">
+            <% } %>
+            True
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <% if (subTasksItem.subCheck == false) { %>
+              <input type="radio" name="completedSub" id="false" value="false" checked="checked">
+            <% } else { %>
+              <input type="radio" name="completedSub" id="false" value="false">
+            <% } %>
+            False
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+  

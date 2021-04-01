@@ -1,0 +1,77 @@
+<h1 class="mt-4">Dashboard</h1>
+<p class="lead mb-3">Welcome <%= user.name %></p>
+<a href="/auth/logout" class="btn btn-secondary">Logout</a>
+
+<a href="/reminder/create" class="btn btn-primary">Create Reminder</a>
+
+<!-- Add a friend -->
+<div style="margin-top: 1.2rem" class="form-group">
+  <form action="/reminder/friend" method="POST">
+    <div class="col-auto my-1">
+      <label for="sel1">Add Friend:</label>
+      <select name="friendSelected" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+
+        <% friends.forEach(friend => { %>
+          <% if ( !(user.id == friend.id) ) { %>
+            <option>
+             Name: <%= friend.name %> &#09;
+             ID: <%= friend.id %> 
+            </option>
+          <% } %>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="col-auto my-1">
+      <button type="submit" class="btn btn-primary">Add Friend</button>
+    </div>
+  </form>
+</div>
+
+<h1 style="margin-top: 2rem;" class="page-header">Your Reminders</h1>
+  
+  <ul class="list-group">
+    <% reminders.forEach(function (reminderItem) { %>
+      <li class="list-group-item">
+        <strong><%= reminderItem.title %>: </strong>
+        <%= reminderItem.description %>
+        || Completed:
+        <% if (reminderItem.completed == true) { %>
+          <span class="badge badge-success">True</span>
+        <% } else if (reminderItem.completed == false) { %>
+          <span class="badge badge-danger">False</span>
+        <% } %>
+        <a class="pull-right" href="<%= "/reminder/" + reminderItem.id %>">View</a>
+      </li>
+    <% }) %>
+  </ul>
+
+
+  <!-- FRIENDS REMINDERS -->
+  <% if (friendsList == null || friendsList == undefined || friendsList.length == 0) { %>
+    <h5 style="margin-top: 3rem;" class="label label-success">You Have No Friends</h5>
+  <% } else { %>
+    <% friendsList.forEach(friend => { %>
+      <h1 style="margin-top: 2rem;" class="page-header"><%= friend.friendName %>'s Reminders</h1>
+
+        <!-- Display that friends reminders -->
+        <% friend.friendReminders.forEach(element => { %>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong><%= element.title %>: </strong>
+              <%= element.description %>
+              || Completed:
+              <% if (element.completed == true) { %>
+                <span class="badge badge-success">True</span>
+              <% } else if (element.completed == false) { %>
+                <span class="badge badge-danger">False</span>
+              <% } %>
+              <a class="pull-right" href="<%= "/reminder/" + friend.friendUserID + "/" + element.id + "/friend" %>">View</a>
+            </li>
+          </ul>
+        <% }) %>
+
+    <% }) %> 
+  <% } %>
+    
+  

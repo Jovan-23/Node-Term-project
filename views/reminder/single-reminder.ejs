@@ -1,0 +1,131 @@
+<h1 class="mt-4">View Single Reminder</h1>
+
+
+<div class="container">
+
+    <ul class="list-group">
+      <li class="list-group-item">
+        <h3 style="margin-bottom: 1.2rem;"><strong><%= reminderItem.title %> </strong></h3>
+        <h5>Description: <%= reminderItem.description %></h5>
+        <h5>Completed:
+          <% if (reminderItem.completed == true) { %>
+            <span class="label label-success">True</span>
+          <% } else if (reminderItem.completed == false) { %>
+            <span class="label label-danger">False</span>
+          <% } %>
+        </h5>
+        <h5 style="margin-bottom: 1rem;">Reminder Date: <%= reminderItem.date %></h5>
+
+        <a class="btn btn-warning" href=<%= "/reminder/" + reminderItem.id + "/edit" %>>Edit</a>
+
+        <form style="display: inline-block;" class="deleteForm "method="POST" action="<%= "/reminder/" + reminderItem.id + "/delete" %>" method="POST">
+          <button type="submit" class="btn btn-danger">Delete Entire Reminder</button>
+        </form>
+      </li>
+    </ul>
+
+</div>
+
+<!-- Tags Section -->
+<div style="margin-top: 1rem;" class="container">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <h3 style="margin-bottom: 1.2rem;"><strong>Tags</strong></h3>
+      <div class="container">
+        <form class="form-inline" action="<%= "/reminder/" + reminderItem.id + "/addTag" %>"  method="POST">
+          <div class="form-group">
+            <label for="title">Add Tag</label>
+            <input
+            class="form-control mx-sm-3"
+              type="text"
+              id="titleInput"
+              placeholder="E.g. Outdoor"
+              name="tagAdd"
+            />
+            <!-- Add Tag -->
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </form>
+        
+        <!-- Display Tags -->
+        <% if (tagsList == null || tagsList == undefined || tagsList.length == 0) { %>
+          <h5 style="margin-top: 1.2rem;" class="label label-success">No Tags</h5>
+        <% } else { %>
+          <div style="margin-top: 1.4rem;">
+            <% tagsList.forEach(tag => { %>
+
+            <!-- Delete Tag  -->
+            <form action="<%= "/reminder/" + tag.tagID + "/" + reminderItem.id + "/deleteTag" %>"  method="POST">
+              <h5 style="margin-top: 1.7rem; display: inline-block;" class="label label-success">
+                ID: <%= tag.tagID %> Tag: <%= tag.tagName %> 
+              </h5>
+              <button style="display: inline-block;" type="submit" class="btn btn-sm btn-danger">Delete Tag</button>
+            </form>
+            <% }) %>
+          </div>
+        <% } %>
+        <!-- End of Display Tags -->
+
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+<!-- Sub Tasks Section -->
+<div style="margin-top: 1rem;" class="container">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <h3 style="margin-bottom: 1.2rem;"><strong>Sub Tasks</strong></h3>
+      <div class="container">
+        <form class="form-inline" action="<%= "/reminder/" + reminderItem.id + "/addSubTask" %>"  method="POST">
+          <div class="form-group">
+            <label for="title">Add Sub Task</label>
+            <input
+              class="form-control mx-sm-3"
+              type="text"
+              id="titleInput"
+              placeholder="Add Sub Task"
+              name="subTaskAdd"
+            />
+            <!-- Add Sub Task -->
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </form>
+
+        <!-- Display Sub Tasks -->
+        <% if (subTasksList == null || subTasksList == undefined || subTasksList.length == 0) { %>
+          <h5 style="margin-top: 1.2rem;" class="label label-success">No Sub Tasks</h5>
+        <% } else { %>
+          <div style="margin-top: 1.4rem;">
+            <% subTasksList.forEach(task => { %>
+
+            <!-- Delete Sub Task  -->
+              <h5 style="margin-top: 1.7rem; display: inline-block;" class="label label-success">
+                ID: <%= task.subID %> Sub Task: <%= task.subName %> 
+              </h5>
+              <span>
+                || Completed:
+                <% if (task.subCheck == true) { %>
+                  <span class="badge badge-success">True</span>
+                <% } else if (task.subCheck == false) { %>
+                  <span class="badge badge-danger">False</span>
+                <% } %>
+              </span>
+
+              <br/>
+            <div style="display: flex;">
+              <a class="btn-sm btn btn-warning" href=<%= "/reminder/" + task.subID + "/" + reminderItem.id + "/edit" %>>Edit Task</a>
+ 
+              <form style="margin-left: .7rem;" action="<%= "/reminder/" + task.subID + "/" + reminderItem.id + "/deleteSubTask" %>"  method="POST">
+                <button style="display: inline-block;" type="submit" class="btn btn-sm btn-danger">Delete Task</button>
+              </form>
+            </div>
+            <% }) %>
+          </div>
+        <% } %>
+        
+      </div>
+    </li>
+  </ul>
+</div>
